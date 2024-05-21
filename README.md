@@ -1,4 +1,4 @@
-## Tara: Your Personal AI Assistant
+# Tara: Your Personal AI Assistant
 • Abstract: 
       Tara stands as a groundbreaking AI assistant meticulously crafted to elevate  daily productivity through seamless voice interaction and automation. At its core,  Tara harnesses cutting-edge AI technologies and Python libraries to execute an extensive array of tasks. These encompass managing emails, navigating the web, system administration, and delivering real-time updates on weather, news, and beyond. By exemplifying how AI can seamlessly integrate into everyday life, this project demonstrates the potential of Tara as a reliable, efficient, and indispensable personal assistant.
 
@@ -7,8 +7,8 @@ Natural Language Processing involves the interaction between computers and human
 Within NLP, text-to-speech (TTS) conversion is an important area that enables various applications such as virtual assistants, accessibility tools for visually impaired individuals, language learning platforms, and more.
 So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for developers working in the field of NLP to incorporate speech synthesis capabilities into their AI applications.
 
-## System Requirements:
-  # 1.Hardware Requirements:
+# System Requirements:
+  ## 1.Hardware Requirements:
   
   •	Processor: Intel Core i5 or equivalent
   
@@ -20,14 +20,14 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
   
   •	Speakers: For audio output
   
-  # 2.Software Requirements:
+  ## 2.Software Requirements:
   •	Operating System: Windows 10 or later
   
   •	Python: Version 3.7 or later
   
   •	Internet Connection: Required for web-based functionalities like email, weather updates, and news retrieval.
   
-  # 3.Tools and Versions:
+  ## 3.Tools and Versions:
   •	Python: Version 3.7+
   
   •	pyttsx3: 2.90
@@ -40,7 +40,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
   
   •	smtplib: StSetup and Installation
   
-  # 4.Features
+  ## 4.Features
   • Text-to-Speech: Converts text responses to speech.
   
   • Speech Recognition: Takes voice commands from the user.
@@ -71,7 +71,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
   
   • Python 3.x
   
-  # • The following Python libraries:
+  ##  The following Python libraries:
   • pyttsx3
   
   • datetime
@@ -103,7 +103,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 # Setup and Installation
 ## 1.Clone the Repository
 
-  # bash
+  ## bash
         • git clone <repository-url>
   
         • cd tara-assistant
@@ -114,7 +114,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 ## bash
         • pip install pyttsx3 speechrecognition wikipedia pyautogui psutil pyjokes requests pillow
 
-# 3. Update API Key
+## 3. Update API Key
 • Replace the placeholders with your actual API keys in the code:
   
   • OpenWeatherMap API key in the weather function.
@@ -126,12 +126,12 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
   ## bash
        • python tara_assistant.py
 
-# 2.Interact with Tara
+## 2.Interact with Tara
   • Speech Mode: Use your microphone to give voice commands.
  
   • Text Mode: Type your queries into the text entry field and press "Enter" or click the "Start" button.
 
-# 3.Commands
+## 3.Commands
 • Time: "What is the time?"
 
 • Date: "What is the date today?"
@@ -157,7 +157,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 • Shutdown/Restart: "Shutdown the system" or "Restart the system."
 
 
-## GUI Components
+# GUI Components
 • Microphone Icon: Displays a microphone icon.
 
 • Mode Selection: Radio buttons to switch between "Speech Mode" and "Text Mode."
@@ -169,7 +169,7 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 • Output Display: A scrolled text area to display the assistant's responses.
 
 
-## Additional Notes
+# Additional Notes
 • Ensure your microphone is working correctly for speech recognition.
 
 • Make sure the specified paths (e.g., for saving screenshots) exist on your system.
@@ -177,10 +177,10 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 • The assistant will greet you and offer its services upon startup.
 
 
-## Contributing
+# Contributing
 • Contributions are welcome! Feel free to submit a pull request or open an issue if you encounter any bugs or have suggestions for new features.
 
-## Standard Python library
+# Standard Python library
 •	webbrowser: Standard Python library
 
 •	os: Standard Python library
