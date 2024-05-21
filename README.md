@@ -9,7 +9,9 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
 
 ## System Requirements:
   # 1.Hardware Requirements:
+  
   •	Processor: Intel Core i5 or equivalent
+  
   •	RAM: Minimum 4 GB (8 GB recommended)
   •	Storage: At least 500 MB of free disk space
   •	Microphone: For voice command input
