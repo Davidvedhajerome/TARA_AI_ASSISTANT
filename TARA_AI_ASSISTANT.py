@@ -248,7 +248,7 @@ if __name__ == "__main__":
     root.title("Tara Assistant")
     frame = tk.Frame(root)
     frame.pack(pady=10)
-    microphone_image = Image.open("D:\\Mic.png")
+    microphone_image = Image.open("Mic.png")
     microphone_image = microphone_image.resize((50, 50), Image.LANCZOS)
     microphone_icon = ImageTk.PhotoImage(microphone_image)
     microphone_label = tk.Label(frame, image=microphone_icon)
