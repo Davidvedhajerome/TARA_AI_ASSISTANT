@@ -100,33 +100,31 @@ So, while pyttsx3 itself is not an AI algorithm, it provides a useful tool for d
   
   • threading
 
-## Setup and Installation
-# 1.Clone the Repository
+# Setup and Installation
+## 1.Clone the Repository
 
   # bash
-  • git clone <repository-url>
+        • git clone <repository-url>
   
-  • cd tara-assistant
+        • cd tara-assistant
   
-  • Install Required Libraries
+## 2.Install Required Libraries
 
-# 2. Use the following command to install all required libraries:
-# bash
-  • pip install pyttsx3 speechrecognition wikipedia pyautogui psutil pyjokes requests pillow
+• Use the following command to install all required libraries:
+## bash
+        • pip install pyttsx3 speechrecognition wikipedia pyautogui psutil pyjokes requests pillow
 
 # 3. Update API Key
-# • Replace the placeholders with your actual API keys in the code:
+• Replace the placeholders with your actual API keys in the code:
   
   • OpenWeatherMap API key in the weather function.
   
   • NewsAPI key in the get_news function.
 
-## Usage
-  # 1.Run the Application
-  
-  • Execute the main script:
- 
- • python tara_assistant.py
+# Usage
+  ## 1.Run the Application
+  ## bash
+       • python tara_assistant.py
 
 # 2.Interact with Tara
   • Speech Mode: Use your microphone to give voice commands.
