@@ -1,6 +1,6 @@
 
 ## Tara: Your Personal AI Assistant
-## Abstract: 
+• Abstract: 
       Tara stands as a groundbreaking AI assistant meticulously crafted to elevate  daily productivity through seamless voice interaction and automation. At its core,  Tara harnesses cutting-edge AI technologies and Python libraries to execute an extensive array of tasks. These encompass managing emails, navigating the web, system administration, and delivering real-time updates on weather, news, and beyond. By exemplifying how AI can seamlessly integrate into everyday life, this project demonstrates the potential of Tara as a reliable, efficient, and indispensable personal assistant.
 
 pyttsx3 falls under the category of Natural Language Processing (NLP) in the broader field of Artificial Intelligence (AI).
