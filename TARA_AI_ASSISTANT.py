@@ -9,12 +9,11 @@ import psutil
 import pyjokes
 import requests
 import json
+from tkinter import scrolledtext, filedialog
 import tkinter as tk
 from tkinter import scrolledtext
 from PIL import Image, ImageTk
 import threading
-
-# Initialize the text-to-speech engine
 engine = pyttsx3.init()
 newVoiceRate = 130
 engine.setProperty('rate', newVoiceRate)
@@ -33,9 +32,12 @@ def wishme():
     speak_and_append("Tara at your service. Please tell me how can I help you?")
 
 def screenshot():
-    img = pyautogui.screenshot()
-    img.save("E:\\screen.png")
-    append_output("Screenshot saved to E:\\screen.png")
+    file_path = filedialog.asksaveasfilename(defaultextension=".png",
+                                             filetypes=[("PNG files", "*.png"), ("All files", "*.*")])
+    if file_path:
+        img = pyautogui.screenshot()
+        img.save(file_path)
+        append_output(f"Screenshot saved to {file_path}")
 
 def cpu():
     usage = str(psutil.cpu_percent())
@@ -152,16 +154,26 @@ def process_query(query):
         songs = os.listdir(song_dir)
         os.startfile(os.path.join(song_dir, songs[0]))
         speak_and_append("Playing Songs")
+    elif 'play songs' in query:
+        song_dir = "C:\\Users\\LENOVO\\Music"
+        songs = os.listdir(song_dir)
+        os.startfile(os.path.join(song_dir, songs[0]))
+        speak_and_append("Playing Songs")
     elif 'remember' in query:
         speak_and_append("What should I remember?")
         data = takeCommand().lower()
         speak_and_append("You told me to remember " + data)
-        remember = open("E:\\remember.txt", "w")
-        remember.write(data)
-        remember.close()
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt",
+                                                 filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+        if file_path:
+            with open(file_path, "w") as remember_file:
+                remember_file.write(data)
     elif 'do you know' in query:
-        remember = open("E:\\remember.txt", "r")
-        speak_and_append("You told me to remember " + remember.read())
+        file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+        if file_path:
+            with open(file_path, "r") as remember_file:
+                remember_data = remember_file.read()
+                speak_and_append("You told me to remember " + remember_data)
     elif 'screenshot' in query:
         screenshot()
     elif 'cpu' in query:
@@ -186,7 +198,7 @@ def on_enter(event=None):
     elif mode == "text":
         start_thread(write_query)
 
-C = 0  # Declare C as a global variable
+C = 0
 
 def speak_process_query():
     global C
@@ -198,16 +210,34 @@ def speak_process_query():
         process_query(query)
 
 def write_query():
-    global C  # Declare C as a global variable
+    global C
     if C < 1:
         wishme()
     C += 1
+    remember_flag = False
     while True:
         query = query_entry.get().strip().lower()
         if query:
-            process_query(query)
-            query_entry.delete(0, tk.END)
+            if remember_flag:
+                data = query
+                if data:
+                    speak_and_append("You told me to remember " + data)
+                    file_path = filedialog.asksaveasfilename(defaultextension=".txt",
+                                                             filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+                    if file_path:
+                        with open(file_path, "w") as remember_file:
+                            remember_file.write(data)
+                    remember_flag = False
+                query_entry.delete(0, tk.END)
+            elif 'remember' in query:
+                remember_flag = True
+                speak_and_append("What should I remember?")
+                query_entry.delete(0, tk.END)
+            else:
+                process_query(query)
+                query_entry.delete(0, tk.END)
         root.update()
+
 
 def append_output(text):
     text_area.insert(tk.END,"Assistant: "+ text + "\n")
@@ -216,39 +246,23 @@ def append_output(text):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Tara Assistant")
-
     frame = tk.Frame(root)
     frame.pack(pady=10)
-
-    # Load and resize the microphone icon image
-    microphone_image = Image.open("D:\\Mic.png")  # Replace with the path to your microphone icon
+    microphone_image = Image.open("D:\\Mic.png")
     microphone_image = microphone_image.resize((50, 50), Image.LANCZOS)
     microphone_icon = ImageTk.PhotoImage(microphone_image)
-
-    # Create a label to display the microphone icon
     microphone_label = tk.Label(frame, image=microphone_icon)
     microphone_label.pack(side=tk.LEFT, padx=10)
-
-    # Create radio buttons to select input mode
     mode_var = tk.StringVar(value="speech")
     speech_mode_button = tk.Radiobutton(frame, text="Speech Mode", variable=mode_var, value="speech")
     speech_mode_button.pack(side=tk.LEFT)
-
     write_mode_button = tk.Radiobutton(frame, text="Write Mode", variable=mode_var, value="text")
     write_mode_button.pack(side=tk.LEFT)
-
-    # Create a text entry field for typing queries
     query_entry = tk.Entry(frame, width=50)
     query_entry.pack(side=tk.LEFT)
-
-    # Create a button to trigger input mode
     button = tk.Button(frame, text="Start", command=on_enter)
     button.pack(side=tk.RIGHT, padx=10)
-
     root.bind("<Return>", on_enter)
-
-    # Create a text area for displaying output
     text_area = scrolledtext.ScrolledText(root, height=20, width=80)
     text_area.pack()
-
     root.mainloop()
