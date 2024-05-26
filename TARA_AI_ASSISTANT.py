@@ -2,23 +2,27 @@ import pyttsx3
 import datetime
 import speech_recognition as sr
 import wikipedia
+import time
 import webbrowser as wb
 import os
 import pyautogui
 import psutil
 import pyjokes
 import requests
-import json
-from tkinter import scrolledtext, filedialog
+import subprocess
+from tkinter import  filedialog
 import tkinter as tk
 from tkinter import scrolledtext
 from PIL import Image, ImageTk
 import threading
+open_app_flag = False
+
 engine = pyttsx3.init()
 newVoiceRate = 130
 engine.setProperty('rate', newVoiceRate)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
+
 def wishme():
     hour = datetime.datetime.now().hour
     if hour >= 0 and hour < 12:
@@ -82,7 +86,7 @@ def takeCommand():
     return query
 
 def weather(city):
-    api_key = "b52c66bcd330f1661de28426f176faac"  # Update with your OpenWeatherMap API key
+    api_key = "b52c66bcd330f1661de28426f176faac"
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "appid=" + api_key + "&q=" + city
     response = requests.get(complete_url)
@@ -98,7 +102,7 @@ def weather(city):
         speak_and_append("City not found")
 
 def get_news():
-    api_key = "81a16fa94dc54006bd497762913c248a"  # Update with your NewsAPI key
+    api_key = "81a16fa94dc54006bd497762913c248a"
     base_url = "https://newsapi.org/v2/top-headlines"
     params = {
         "apiKey": api_key,
@@ -120,6 +124,34 @@ def get_news():
             speak_and_append("No articles found")
     else:
         speak_and_append("Failed to fetch news data")
+
+def open_application(app_name):
+    app_mapping = {
+        'notepad': 'notepad.exe',
+        'calculator': 'calc.exe',
+        'chrome': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        'word': 'C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE',
+        'excel': 'C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE',
+        'powerpoint': 'C:\\Program Files\\Microsoft Office\\root\\Office16\\POWERPNT.EXE',
+        'paint': 'mspaint.exe',
+        'file explorer': 'explorer.exe',
+        'task manager': 'taskmgr.exe',
+        'photos': 'C:\\Program Files\\Windows Photo Viewer\\PhotoViewer.dll',
+        'calendar': 'C:\\Program Files\\Windows Calendar\\wincal.exe',
+        'media player': 'C:\\Program Files\\Windows Media Player\\wmplayer.exe',
+        'edge': 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+        'firefox': 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
+        'vlc': 'C:\\Program Files\\VideoLAN\\VLC\\vlc.exe',
+    }
+    try:
+        if app_name in app_mapping:
+            subprocess.Popen(app_mapping[app_name])
+            speak_and_append(f"Opening {app_name}")
+        else:
+            speak_and_append(f"Application {app_name} not found in predefined list.")
+    except Exception as e:
+        speak_and_append(f"Failed to open {app_name}: {e}")
+
 
 def process_query(query):
     if 'time' in query:
@@ -154,11 +186,6 @@ def process_query(query):
         songs = os.listdir(song_dir)
         os.startfile(os.path.join(song_dir, songs[0]))
         speak_and_append("Playing Songs")
-    elif 'play songs' in query:
-        song_dir = "C:\\Users\\LENOVO\\Music"
-        songs = os.listdir(song_dir)
-        os.startfile(os.path.join(song_dir, songs[0]))
-        speak_and_append("Playing Songs")
     elif 'remember' in query:
         speak_and_append("What should I remember?")
         data = takeCommand().lower()
@@ -186,6 +213,10 @@ def process_query(query):
         weather(city)
     elif 'news' in query:
         get_news()
+    elif 'open application' in query:
+        speak_and_append("Which application should I open?")
+        app_name = takeCommand().lower()
+        open_application(app_name)
 
 def start_thread(mode):
     thread = threading.Thread(target=mode)
@@ -211,6 +242,7 @@ def speak_process_query():
 
 def write_query():
     global C
+    global open_app_flag
     if C < 1:
         wishme()
     C += 1
@@ -233,22 +265,37 @@ def write_query():
                 remember_flag = True
                 speak_and_append("What should I remember?")
                 query_entry.delete(0, tk.END)
-            else:
-                process_query(query)
+            elif 'open application' in query:
+                open_app_flag = True
+                speak_and_append("Which application should I open?")
                 query_entry.delete(0, tk.END)
+                time.sleep(3)
+            elif open_app_flag:
+                app_to_open = query
+                open_application(app_to_open)
+                open_app_flag = False
+                query_entry.delete(0, tk.END)
+
+
+        else:
+            process_query(query)
+            query_entry.delete(0, tk.END)
         root.update()
-
-
+def reset_app():
+    global remember_flag, open_app_flag
+    remember_flag = False
+    open_app_flag = False
+    query_entry.delete(0, tk.END)
 def append_output(text):
-    text_area.insert(tk.END,"Assistant: "+ text + "\n")
+    text_area.insert(tk.END, "Assistant: " + text + "\n")
     text_area.see(tk.END)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Tara Assistant")
+    root.title("Tara AI Assistant")
     frame = tk.Frame(root)
     frame.pack(pady=10)
-    microphone_image = Image.open("Mic.png")
+    microphone_image = Image.open("D:\\Mic.png")
     microphone_image = microphone_image.resize((50, 50), Image.LANCZOS)
     microphone_icon = ImageTk.PhotoImage(microphone_image)
     microphone_label = tk.Label(frame, image=microphone_icon)
